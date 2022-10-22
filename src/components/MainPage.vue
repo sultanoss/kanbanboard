@@ -3,7 +3,7 @@
     <div class="row flex-nowrap">
       <div
         class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
-        style="background-color: #2a3647; max-width: 200px;"
+        style="background-color: #2a3647; max-width: 200px"
       >
         <div
           class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100"
@@ -30,7 +30,7 @@
             <li
               class="nav-item d-flex justify-content-center align-items-center"
             >
-              <RouterLink to="board" class="nav-link align-middle px-0"
+              <RouterLink to="/main/board" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-kanban"></i
               ></RouterLink>
               <span class="ms-3 d-none d-sm-inline">Board</span>
@@ -38,7 +38,7 @@
             <li
               class="nav-item d-flex justify-content-center align-items-center"
             >
-              <RouterLink to="addtask" class="nav-link align-middle px-0"
+              <RouterLink to="/main/addtask" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-pencil-square"></i
               ></RouterLink>
               <span class="ms-3 d-none d-sm-inline">Add Task</span>
@@ -46,7 +46,7 @@
             <li
               class="nav-item d-flex justify-content-center align-items-center"
             >
-              <RouterLink to="contacts" class="nav-link align-middle px-0"
+              <RouterLink to="/main/contacts" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-person-rolodex"></i
               ></RouterLink>
               <span class="ms-3 d-none d-sm-inline">Contacts</span>
@@ -64,8 +64,8 @@
               class="bi bi-question-circle"
               style="font-size: 24px; color: lightgray"
             ></i>
-            <div class="user-img">
-              <img
+            <div class="user-img d-flex align-items-center">
+              <!-- <img
                 src="../assets/mypic11.jpg"
                 style="
                   height: 32px;
@@ -74,7 +74,26 @@
                   object-fit: cover;
                   margin-left: 20px;
                 "
-              />
+              /> -->
+              <i
+                class="bi bi-person"
+                style="
+                  font-size: 1.5rem;
+                  margin-left: 16px;
+                  cursor: pointer;
+                  color: #212529;
+                "
+              ></i>
+              <i
+                class="bi bi-box-arrow-left"
+                style="
+                  font-size: 1.5rem;
+                  margin-left: 16px;
+                  cursor: pointer;
+                  color: #212529;
+                "
+                @click="logOut"
+              ></i>
             </div>
           </div>
         </div>
@@ -85,6 +104,44 @@
     </div>
   </div>
 </template>
+
+<script>
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+export default {
+  data() {
+    return {
+      user: null,
+    };
+  },
+  async created() {
+    try {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.user = user;
+        } else {
+          this.user = null;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  methods: {
+    logOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          firebase.auth().onAuthStateChanged(() => {
+            this.$router.push("/");
+          });
+        });
+    },
+  },
+};
+</script>
 
 <style scoped lang="scss">
 .header {
@@ -99,7 +156,7 @@
   padding-right: 24px;
 }
 
-ul{
+ul {
   align-self: center;
 }
 .nav-link {
@@ -111,7 +168,7 @@ ul{
 }
 .nav-link:focus,
 .nav-link:hover {
-  color:#29abe2;
+  color: #29abe2;
 }
 .router-content {
   min-height: calc(100vh - 50px);

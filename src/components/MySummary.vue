@@ -9,6 +9,7 @@
           paddind-left: 50px;
           padding-right: 32px;
           border-right: 2px solid #29abe2;
+          font-weight: 700;
         "
       >
         Summary
@@ -17,12 +18,8 @@
         >Everything in a nutshell!</span
       >
     </div>
-    <div
-      class="summary d-flex justify-content-center align-items-center"
-    >
-      <div
-        class="summary-items d-flex flex-column align-items-center"
-      >
+    <div class="summary d-flex justify-content-center align-items-center">
+      <div class="summary-items d-flex flex-column align-items-center">
         <div class="row1 d-flex align-items-center">
           <div class="task-info">
             <span>5</span>
@@ -101,17 +98,55 @@
           </div>
         </div>
       </div>
-      <div
-        class="summary-welcom d-flex flex-column align-items-center"
-      >
+      <div class="summary-welcom d-flex flex-column align-items-center">
         <span style="font-weight: 500; font-size: 28px">Good morning,</span>
-        <span style="font-weight: 500; font-size: 32px; color: #29abe2"
-          >Radwan Sultan</span
+        <span
+          style="font-weight: 500; font-size: 32px; color: #29abe2"
+          v-if="user"
+          >{{ user.displayName }}</span
         >
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+export default {
+  data() {
+    return {
+      user: null,
+    };
+  },
+  async created() {
+    try {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.user = user;
+        } else {
+          this.user = null;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  methods: {
+    logOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          firebase.auth().onAuthStateChanged(() => {
+            this.$router.push("/");
+          });
+        });
+    },
+  },
+};
+</script>
 
 <style scoped lang="scss">
 .summary-container {
@@ -123,7 +158,6 @@
   margin-top: 50px;
   margin-bottom: 50px;
 }
-
 
 .summary-items {
   width: 400px;
