@@ -22,8 +22,32 @@
 
 <script>
 import DragAndDrop from "./DragAndDrop.vue";
+import { db } from "@/main";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 export default {
   components: { DragAndDrop },
+
+  created() {
+    this.getTasks();
+  },
+
+  data() {
+    return {
+      tasks: [],
+    };
+  },
+
+  methods: {
+    async getTasks() {
+      onSnapshot(collection(db, "tasks"), async (snap) => {
+        snap.forEach((doc) => {
+          this.tasks.push({ ...doc.data(), id: doc.id });
+        });
+      });
+    },
+  },
 };
 </script>
 
@@ -40,7 +64,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 50px;
-  width: 90%;
+  width: 100%;
 }
 
 .board-headr-search {

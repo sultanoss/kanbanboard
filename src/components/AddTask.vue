@@ -3,7 +3,7 @@
     <div class="add-task-header">
       <h2 style="margin: 0px">Add Task</h2>
     </div>
-    <form class="add-task-form">
+    <form class="add-task-form" @submit.prevent="addTask">
       <div class="form d-flex justify-content-center">
         <div class="form-left">
           <div class="mb-3">
@@ -12,6 +12,8 @@
               type="text"
               class="form-control"
               placeholder="Enter a title"
+              required
+              v-model="title"
             />
           </div>
           <div class="mb-3">
@@ -20,6 +22,8 @@
               class="form-control"
               rows="3"
               placeholder="Enter a Description"
+              required
+              v-model="description"
             ></textarea>
           </div>
           <div class="mb-3">
@@ -27,11 +31,13 @@
             <select
               class="form-select form-select-sm"
               aria-label=".form-select-sm example"
+              required
+              v-model="category"
             >
               <option selected>Select task category</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="sales">Sales</option>
+              <option value="backoffice">Backoffice</option>
+              <option value="products">Products</option>
             </select>
           </div>
           <div class="mb-3">
@@ -39,54 +45,70 @@
             <select
               class="form-select form-select-sm"
               aria-label=".form-select-sm example"
+              required
+              multiple
+              v-model="assignedTo"
             >
-              <option selected>Select contacts to assign</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected style="font-weight: 500">
+                Select contacts to assign
+              </option>
+              <option
+                v-for="user in users"
+                :data-value="{
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                }"
+                :key="user"
+              >
+                {{ user.firstName + " " + user.lastName }}
+              </option>
             </select>
           </div>
         </div>
         <div class="form-right">
           <div class="mb-3">
             <label for="date" class="form-label">Due date</label>
-            <input type="date" class="form-control" />
+            <input
+              type="date"
+              class="form-control"
+              required
+              v-model="dueDate"
+            />
           </div>
           <div class="mb-3">
             <label for="select" class="form-label">Priority</label>
             <select
               class="form-select form-select-sm"
               aria-label=".form-select-sm example"
+              required
+              v-model="priority"
             >
               <option selected>Set Priority</option>
-              <option value="1">Low</option>
-              <option value="2">Medium</option>
-              <option value="3">High</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
             </select>
           </div>
+
           <div class="mb-3">
             <label for="subtasks" class="form-label">Subtasks</label>
-            <!-- <input
-              type="text"
-              class="form-control"
-              placeholder="Enter new subtask"
-            /> -->
             <div class="input-group mb-3">
               <div class="search">
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Add new subtask"
+                  v-model="subTask"
                 />
-                <i class="bi bi-plus"></i>
+                <i class="bi bi-plus" @click="addSubTask"></i>
               </div>
             </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" />
-            <label class="form-check-label" for="flexCheckDefault">
-              Default checkbox
-            </label>
+          <div class="sub-tasks">
+            <div class="subTask" v-for="subtask in subTasks" :key="subtask">
+              {{ subtask }}
+              <i class="bi bi-x" style="font-size: 24px"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -109,6 +131,75 @@
     </form>
   </div>
 </template>
+
+<script>
+import { db } from "@/main";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
+export default {
+  created() {
+    this.getUsers();
+  },
+
+  data() {
+    return {
+      title: "",
+      description: "",
+      category: "",
+      assignedTo: [],
+      dueDate: "",
+      priority: "",
+      subTask: "",
+      subTasks: [],
+      users: [],
+      tasks: [],
+    };
+  },
+
+  methods: {
+    async addTask() {
+      this.tasks = [];
+      await db.collection("tasks").add({
+        title: this.title,
+        description: this.description,
+        category: this.category,
+        assignedTo: this.assignedTo,
+        dueDate: this.dueDate,
+        priority: this.priority,
+        subTasks: this.subTasks,
+        collection: "todos",
+      });
+      this.$router.push("/main/board");
+    },
+
+    async getUsers() {
+      onSnapshot(collection(db, "users"), async (snap) => {
+        snap.forEach((doc) => {
+          this.users.push({ ...doc.data(), id: doc.id });
+        });
+      });
+    },
+
+    sortUsers() {
+      this.users.sort(function (a, b) {
+        let nameA = a.firstName.toLowerCase(),
+          nameB = b.firstName.toLowerCase();
+        if (nameA < nameB)
+          //sort string ascending
+          return -1;
+        if (nameA > nameB) return 1;
+        return 0; //default return value (no sorting)
+      });
+    },
+    addSubTask() {
+      this.subTasks.push(this.subTask);
+      this.subTask = "";
+      console.log(this.subTasks);
+    },
+  },
+};
+</script>
 
 <style scoped lang="scss">
 .add-task-container {
@@ -160,13 +251,13 @@
   width: 100%;
 }
 
- input:focus {
+input:focus {
   box-shadow: none;
   outline: 1px solid #29abe2;
 }
 
-textarea{
-    resize: none;
+textarea {
+  resize: none;
 }
 
 textarea:focus {
@@ -185,5 +276,26 @@ select:focus {
   right: 5px;
   font-size: 24px;
   cursor: pointer;
+}
+
+.sub-tasks {
+  max-height: 144px;
+  overflow: auto;
+}
+
+.subTask {
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 8px;
+  padding-left: 12px;
+  padding-right: 4px;
+  margin-bottom: 16px;
+  &:hover {
+    background: #212529;
+    color: white;
+  }
 }
 </style>

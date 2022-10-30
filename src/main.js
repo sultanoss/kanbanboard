@@ -15,6 +15,7 @@ import MyBoard from "./components/MyBoard.vue"
 import AddTask from "./components/AddTask.vue"
 import MyContacts from "./components/MyContacts.vue"
 import SignUp from "./components/SignUp.vue";
+import testCom from "./components/testCom.vue"
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWOZKferZ4TiSnQM-b3jvKBl-qTFm0o9w",
@@ -45,12 +46,12 @@ const router = createRouter({
                 { path: "contacts", component: MyContacts },
             ]
         },
+        { path: '/test', component: testCom },
         { path: '/signup', component: SignUp },
     ],
     linkActiveClass: 'active' //change the default class name from router-link-active to active
 });
 
 const app = createApp(App);
-
 app.use(router);
 app.mount('#app');

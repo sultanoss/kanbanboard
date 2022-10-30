@@ -116,32 +116,6 @@ export default {
   methods: {
     async login() {
       this.isLoading = true;
-      // try {
-      //   const response = await fetch(
-      //     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCWOZKferZ4TiSnQM-b3jvKBl-qTFm0o9w",
-      //     {
-      //       method: "POST",
-      //       body: JSON.stringify({
-      //         email: this.email,
-      //         password: this.password,
-      //         returnSecureToken: true,
-      //       }),
-      //     }
-      //   );
-
-      //   const responseData = await response.json();
-      //   if (!response.ok) {
-      //     console.log(responseData);
-      //     const error = new Error(
-      //       responseData.message || "Faild to authenticate"
-      //     );
-      //     throw error;
-      //   }
-      //   console.log(responseData);
-      //   this.$router.push("/main/summary");
-      // } catch (err) {
-      //   this.error = err.message || "Failed to authenticate, try later.";
-      // }
       await firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
