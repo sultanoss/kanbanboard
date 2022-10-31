@@ -1,5 +1,5 @@
 <template>
-  <!-- Modal  -->
+  <!-- taskdetails Modal  -->
   <div
     class="modal fade"
     id="boardModal"
@@ -30,6 +30,32 @@
             <span>Priority:</span>
             <div :class="priorityColor">
               {{ selectedTodo.priority }}
+            </div>
+          </div>
+          <div
+            class="subTasks-items"
+            style="margin-bottom: 8px"
+            v-if="!selectedTodo.subTasks || !selectedTodo.subTasks.length == 0"
+          >
+            <span style="font-weight: 700">Subtasks:</span>
+            <div class="d-flex flex-column" style="font-weight: 500">
+              <div
+                class="subtask d-flex"
+                v-for="(subTask, index) in selectedTodo.subTasks"
+                :key="index"
+              >
+                <span style="max-width: 280px">{{ subTask }}</span>
+                <div>
+                  <i
+                    class="bi bi-clipboard2-check"
+                    style="font-size: 20px; cursor: pointer"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="Done"
+                    @click="subTaskDone(index)"
+                  ></i>
+                </div>
+              </div>
             </div>
           </div>
           <div class="assigned">
@@ -84,9 +110,18 @@
               <span class="categoryTodo">{{ item.category }}</span>
               <p>{{ item.dueDate }}</p>
             </div>
-            <span class="mb-1" style="font-weight: 500">{{ item.title }}</span>
+            <span class="mb-1" style="font-weight: 500; color: #363636">{{
+              item.title
+            }}</span>
             <p>{{ item.description }}</p>
-            <div class="assignedTo d-flex justify-content-between mb-1">
+            <div class="sub-tasks" v-if="item.subTasks.length > 0">
+              <p style="color: #363636; margin-right: 4px">Subtasks</p>
+              <p style="color: #363636">({{ item.subTasks.length }})</p>
+            </div>
+            <div
+              class="assignedTo d-flex justify-content-between"
+              style="margin-top: 4px"
+            >
               <div class="d-flex">
                 <div
                   v-for="user in item.assignedTo"
@@ -136,7 +171,11 @@
             </div>
             <span class="mb-1" style="font-weight: 500">{{ item.title }}</span>
             <p>{{ item.description }}</p>
-            <div class="assignedTo d-flex justify-content-between mb-1">
+            <div class="sub-tasks" v-if="item.subTasks.length > 0">
+              <p style="color: #363636; margin-right: 4px">Subtasks</p>
+              <p style="color: #363636">({{ item.subTasks.length }})</p>
+            </div>
+            <div class="assignedTo d-flex justify-content-between">
               <div class="d-flex">
                 <div
                   v-for="user in item.assignedTo"
@@ -186,7 +225,11 @@
             </div>
             <span class="mb-1" style="font-weight: 500">{{ item.title }}</span>
             <p>{{ item.description }}</p>
-            <div class="assignedTo d-flex justify-content-between mb-1">
+            <div class="sub-tasks" v-if="item.subTasks.length > 0">
+              <p style="color: #363636; margin-right: 4px">Subtasks</p>
+              <p style="color: #363636">({{ item.subTasks.length }})</p>
+            </div>
+            <div class="assignedTo d-flex justify-content-between">
               <div class="d-flex">
                 <div
                   v-for="user in item.assignedTo"
@@ -237,7 +280,11 @@
             </div>
             <span class="mb-1" style="font-weight: 500">{{ item.title }}</span>
             <p>{{ item.description }}</p>
-            <div class="assignedTo d-flex justify-content-between mb-1">
+            <div class="sub-tasks" v-if="item.subTasks.length > 0">
+              <p style="color: #363636; margin-right: 4px">Subtasks</p>
+              <p style="color: #363636">({{ item.subTasks.length }})</p>
+            </div>
+            <div class="assignedTo d-flex justify-content-between">
               <div class="d-flex">
                 <div
                   v-for="user in item.assignedTo"
@@ -276,6 +323,7 @@ import {
   collection,
   onSnapshot,
   getDoc,
+  arrayRemove,
 } from "firebase/firestore";
 
 export default {
@@ -333,6 +381,17 @@ export default {
   },
 
   methods: {
+    async subTaskDone(index) {
+      console.log(index);
+      console.log(this.selectedTodo.subTasks);
+      console.log(this.selectedTodo.subTasks[index]);
+      await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
+        subTasks: arrayRemove(this.selectedTodo.subTasks[index]),
+      });
+      this.selectedTodo.subTasks.splice(index, 1);
+      this.getTasks();
+    },
+
     async getTasks() {
       onSnapshot(collection(db, "tasks"), async (snap) => {
         snap.forEach((doc) => {
@@ -398,10 +457,15 @@ export default {
       this.selectedTodo = {};
       const snap = await getDoc(doc(db, "tasks", `${id}`));
       if (snap.exists()) {
-        this.selectedTodo = Object.assign(snap.data(), this.selectedTodo);
+        this.selectedTodo = Object.assign(
+          snap.data(),
+          { subId: `${id}` },
+          this.selectedTodo
+        );
       } else {
         alert("No such document");
       }
+      console.log(this.selectedTodo);
     },
 
     //drag and drop functions
@@ -528,9 +592,23 @@ export default {
     font-size: 14px;
     color: #969696;
     font-weight: 500;
-    margin-bottom: 12px;
+    margin: 0px 0px 4px 0px;
   }
 }
+
+.sub-tasks {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  span {
+    font-weight: 500;
+  }
+}
+
+// .subtask-items{
+//   display: none;
+//   flex-direction: column;
+// }
 
 .dndrop-container {
   min-height: 130px;
@@ -708,5 +786,21 @@ export default {
     color: #a6a6a6;
     font-weight: 400;
   }
+}
+
+.subTasks-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.subtask {
+  word-break: break-word;
+  background: #f4f3f3;
+  margin-bottom: 5px;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
