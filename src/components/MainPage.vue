@@ -1,18 +1,18 @@
 <template>
   <div class="container-fluid">
-    <div class="row flex-nowrap">
+    <div class="content-container row flex-nowrap">
       <div
         class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
         style="background-color: #2a3647; max-width: 200px"
       >
         <div
-          class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100"
+          class="sidebar d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100"
         >
           <div
-            class="d-flex justify-content-center align-items-center w-100"
+            class="logo d-flex justify-content-center align-items-center w-100"
             style="margin-top: 54px; margin-bottom: 54px"
           >
-            <img src="../assets/joinlogo.png" />
+            <img style="height: 80px" src="../assets/capa2.png" />
           </div>
 
           <ul
@@ -56,34 +56,21 @@
       </div>
       <div class="col" style="background-color: #f7f7f7; padding: 0">
         <div class="header">
-          <span style="font-weight: 500">Kanban Project Management Tool</span>
+          <span class="title" style="font-weight: 500"
+            >Kanban Project Management Tool</span
+          >
+          <img class="logo-img" src="../assets/capa.png" />
           <div
             class="user-help d-flex justify-content-center align-items-center"
           >
-            <i
-              class="bi bi-question-circle"
-              style="font-size: 24px; color: lightgray"
-            ></i>
-            <div class="user-img d-flex align-items-center">
-              <!-- <img
-                src="../assets/mypic11.jpg"
-                style="
-                  height: 32px;
-                  width: 32px;
-                  border-radius: 50%;
-                  object-fit: cover;
-                  margin-left: 20px;
-                "
-              /> -->
+            <RouterLink to="/main/help" class="nav-link align-middle px-0">
               <i
-                class="bi bi-person"
-                style="
-                  font-size: 1.5rem;
-                  margin-left: 16px;
-                  cursor: pointer;
-                  color: #212529;
-                "
-              ></i>
+                class="bi bi-question-circle"
+                style="font-size: 24px; color: lightgray"
+              ></i
+            ></RouterLink>
+            <div class="user-img d-flex align-items-center">
+              <span class="logout">Logout</span>
               <i
                 class="bi bi-box-arrow-left"
                 style="
@@ -171,6 +158,99 @@ ul {
   color: #29abe2;
 }
 .router-content {
-  min-height: calc(100vh - 50px);
+  // min-height: calc(100vh - 50px);
+}
+
+@media (max-width: 768px) {
+  .col-auto {
+    width: 150px !important;
+  }
+
+  @media (max-width: 576px) {
+    .col-auto {
+      width: auto !important;
+    }
+  }
+
+  .d-sm-inline {
+    margin-left: 8px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .content-container {
+    flex-direction: column-reverse !important;
+  }
+
+  .sidebar {
+    min-height: auto !important;
+    flex-direction: row !important;
+    height: 50px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .col-auto {
+    max-width: unset !important;
+  }
+
+  .logo {
+    width: unset !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    img {
+      display: none;
+    }
+  }
+
+  ul {
+    flex-direction: row !important;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .router-content {
+    min-height: unset !important;
+  }
+
+  .summary-container {
+    height: calc(100vh - 100px) !important;
+  }
+}
+
+.logout {
+  margin-left: 16px;
+  font-weight: 500;
+  @media (max-width: 567px) {
+    margin-left: 8px;
+    font-size: 14px;
+  }
+}
+
+.user-img {
+  i {
+    @media (max-width: 576px) {
+      margin-left: 8px !important;
+    }
+  }
+}
+
+.title {
+  @media (max-width: 576px) {
+    display: none;
+  }
+}
+
+.logo-img {
+  display: none;
+  @media (max-width: 576px) {
+    display: flex;
+  }
+}
+
+.bi-question-circle {
+  @media (max-width: 576px) {
+    font-size: 16px !important;
+  }
 }
 </style>

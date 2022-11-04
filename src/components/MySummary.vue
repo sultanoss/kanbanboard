@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-deprecated-filter -->
 <template>
   <div class="summary-container">
     <div
@@ -14,7 +15,13 @@
       >
         Summary
       </h2>
-      <span style="font-weight: 400; font-size: 18px; padding-left: 32px"
+      <span
+        style="
+          font-weight: 500;
+          font-size: 18px;
+          padding-left: 32px;
+          color: #433b3b;
+        "
         >Everything in a nutshell!</span
       >
     </div>
@@ -22,15 +29,15 @@
       <div class="summary-items d-flex flex-column align-items-center">
         <div class="row1 d-flex align-items-center">
           <div class="task-info">
-            <span>5</span>
+            <span>{{ this.tasks.length }}</span>
             <p>Tasks in Board</p>
           </div>
           <div class="task-info">
-            <span>2</span>
+            <span>{{ this.inProgress.length }}</span>
             <p>Tasks in Progress</p>
           </div>
           <div class="task-info">
-            <span>2</span>
+            <span>{{ this.feedbacks.length }}</span>
             <p>Awaiting Feedback</p>
           </div>
         </div>
@@ -46,16 +53,21 @@
                 background-color: #ff5716;
                 border-radius: 50%;
               "
-            ></div>
+            >
+              <i
+                class="bi bi-chevron-double-up"
+                style="color: white; font-size: 22px"
+              ></i>
+            </div>
             <div
               class="status d-flex flex-column justify-content-center align-items-center"
             >
-              <span>1</span>
+              <span>{{ this.urgentTasks.length }}</span>
               <p>Urgent</p>
             </div>
           </div>
           <div class="deadline d-flex flex-column align-items-center">
-            <span>October 16,2022</span>
+            <span v-if="minDate">{{ dateTime(minDate) }}</span>
             <p>Upcoming Deadline</p>
           </div>
         </div>
@@ -65,16 +77,18 @@
             style="margin-right: 8px"
           >
             <div
-              class="todo-icon"
+              class="todo-icon d-flex flex-column justify-content-center align-items-center"
               style="
                 height: 32px;
                 width: 32px;
                 border-radius: 50%;
-                background-color: black;
+                background-color: #2a3647;
               "
-            ></div>
+            >
+              <i class="bi bi-pencil" style="color: white; font-size: 16px"></i>
+            </div>
             <div class="todo-details">
-              <span>1</span>
+              <span>{{ this.todos.length }}</span>
               <p>To-do</p>
             </div>
           </div>
@@ -83,25 +97,30 @@
             style="margin-left: 8px"
           >
             <div
-              class="todo-icon"
+              class="todo-icon d-flex flex-column justify-content-center align-items-center"
               style="
                 height: 32px;
                 width: 32px;
                 border-radius: 50%;
-                background-color: black;
+                background-color: #2a3647;
               "
-            ></div>
+            >
+              <i
+                class="bi bi-check-lg"
+                style="color: white; font-size: 22px"
+              ></i>
+            </div>
             <div class="todo-details">
-              <span>1</span>
+              <span>{{ this.done.length }}</span>
               <p>Done</p>
             </div>
           </div>
         </div>
       </div>
       <div class="summary-welcom d-flex flex-column align-items-center">
-        <span style="font-weight: 500; font-size: 28px">Good morning,</span>
+        <span style="font-weight: 500; font-size: 62px">Hello,</span>
         <span
-          style="font-weight: 500; font-size: 32px; color: #29abe2"
+          style="font-weight: 500; font-size: 48px; color: #29abe2"
           v-if="user"
           >{{ user.displayName }}</span
         >
@@ -112,12 +131,23 @@
 
 <script>
 import firebase from "firebase/compat/app";
+import { db } from "@/main";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
+import moment from "moment";
+
 export default {
   data() {
     return {
       user: null,
+      todos: [],
+      inProgress: [],
+      feedbacks: [],
+      done: [],
+      tasks: [],
+      urgentTasks: [],
+      minDate: "",
     };
   },
   async created() {
@@ -132,17 +162,97 @@ export default {
     } catch (error) {
       console.log(error);
     }
+    this.getTasks();
   },
   methods: {
-    logOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          firebase.auth().onAuthStateChanged(() => {
-            this.$router.push("/");
+    dateTime(value) {
+      return moment(value).format("DD.MM.YY");
+    },
+
+    async getTasks() {
+      onSnapshot(collection(db, "tasks"), async (snap) => {
+        snap.forEach((doc) => {
+          this.tasks.push({ ...doc.data(), id: doc.id });
+        });
+      });
+
+      this.getTodos();
+      this.getInProgress();
+      this.getFeedbacks();
+      this.getDone();
+      this.getUrgentTasks();
+    },
+    async getTodos() {
+      await db
+        .collection("tasks")
+        .where("collection", "==", "todos")
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.todos.push({ ...doc.data(), id: doc.id });
           });
         });
+    },
+
+    async getInProgress() {
+      await db
+        .collection("tasks")
+        .where("collection", "==", "inProgress")
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.inProgress.push({ ...doc.data(), id: doc.id });
+          });
+        });
+    },
+
+    async getFeedbacks() {
+      await db
+        .collection("tasks")
+        .where("collection", "==", "feedbacks")
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.feedbacks.push({ ...doc.data(), id: doc.id });
+          });
+        });
+    },
+
+    async getDone() {
+      await db
+        .collection("tasks")
+        .where("collection", "==", "done")
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.done.push({ ...doc.data(), id: doc.id });
+          });
+        });
+    },
+
+    async getUrgentTasks() {
+      await db
+        .collection("tasks")
+        .where("priority", "==", "High")
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.urgentTasks.push({ ...doc.data(), id: doc.id });
+          });
+        });
+      this.getOldestDate();
+    },
+
+    getOldestDate() {
+      // Get Min date
+      const minDate = new Date(
+        Math.min(
+          ...this.urgentTasks.map((element) => {
+            return new Date(element.dueDate);
+          })
+        )
+      );
+      this.minDate = minDate;
     },
   },
 };
@@ -153,18 +263,63 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 100px;
+  @media (max-width: 1200px) {
+    margin-top: 0;
+    height: calc(100vh - 50px);
+    justify-content: center;
+  }
 }
 .summary-header {
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
+.summary {
+  @media (max-width: 1200px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.summary-header {
+  @media (max-width: 1200px) {
+    margin: unset;
+  }
+  @media(max-width:576px){
+    flex-direction: column;
+    h2{
+      border-right: unset !important;
+      padding-right: unset !important;
+      margin-bottom: 8px !important;
+      font-size: 20px;
+    }
+    span{
+      margin-bottom: 16px;
+      padding-left: unset !important;
+      font-size: 14px !important;
+    }
+  }
+}
+
 .summary-items {
   width: 400px;
+  @media(max-width:576px){
+    width: 320px;
+  }
 }
 
 .summary-welcom {
   width: 400px;
+  @media (max-width: 1200px) {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    span {
+      font-size: 32px !important;
+    }
+  }
+  @media(max-width:576px){
+    display: none !important;
+  }
 }
 
 .task-info {
@@ -179,19 +334,32 @@ export default {
   padding: 16px;
   text-align: center;
 
+  @media(max-width:576px){
+    height: 90px;
+    width: 90px;
+    padding: 8px;
+  }
+
   p {
     margin: 0;
+    font-weight: 500;
   }
 
   span {
     font-weight: 600;
     font-size: 32px;
+    @media(max-width:576px){
+      font-size: 24px;
+    }
   }
 }
 
 .row1 {
   justify-content: space-between;
   width: 100%;
+  @media(max-width:576px){
+    width: 90%;
+  }
 }
 .row2 {
   padding: 16px;
@@ -199,6 +367,10 @@ export default {
   border-radius: 16px;
   margin-top: 16px;
   width: 100%;
+ @media(max-width:576px){
+  padding: 8px;
+  width: 90%;
+ }
 }
 
 .status {
@@ -211,6 +383,10 @@ export default {
 
   p {
     font-size: 12px;
+    font-weight: 500;
+    @media(max-width:576px){
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -225,6 +401,7 @@ export default {
   p {
     margin: 0;
     font-size: 12px;
+    font-weight: 500;
   }
 
   span {
@@ -235,6 +412,9 @@ export default {
 .row3 {
   width: 100%;
   margin-top: 16px;
+  @media(max-width:576px){
+    width: 90%;
+  }
 }
 
 .summary-todo {
@@ -248,12 +428,18 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 16px;
+  @media(max-width:576px){
+    padding: 8px;
+  }
   span {
     font-weight: 600;
     font-size: 24px;
   }
   p {
     font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 0;
   }
 }
+
 </style>

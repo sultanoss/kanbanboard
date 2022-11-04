@@ -170,7 +170,7 @@
                   type="button"
                   class="btn btn-dark btn-sm m-1"
                   style="width: 130px"
-                  data-bs-dismiss="modal"
+                  @click="clearInput"
                 >
                   Cancel
                 </button>
@@ -185,25 +185,6 @@
             </form>
           </div>
         </div>
-        <!-- <div class="modal-footer">
-          <button
-            class="btn btn-dark btn-sm m-1"
-            type="button"
-            
-            data-bs-dismiss="modal"
-          >
-            Cancel
-          </button>
-          <button
-            @click="createUser"
-            data-bs-dismiss="modal"
-            class="btn btn-dark btn-sm m-1"
-            type="submit"
-            style="width: 130px"
-          >
-            Create contact
-          </button>
-        </div> -->
       </div>
     </div>
   </div>
@@ -257,6 +238,10 @@ export default {
         email: this.email,
         phoneNummber: this.phoneNummber,
       });
+      this.clearInput();
+    },
+
+    clearInput() {
       this.firstName = "";
       this.lastName = "";
       this.email = "";
@@ -327,6 +312,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 34px;
 }
 
 .users {

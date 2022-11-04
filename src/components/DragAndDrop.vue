@@ -10,6 +10,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title">Task infos</h5>
           <button
             type="button"
             class="btn-close"
@@ -24,7 +25,8 @@
           <span class="title">{{ selectedTodo.title }}</span>
           <p>{{ selectedTodo.description }}</p>
           <div class="due-date">
-            Due Date: <span class="date">{{ selectedTodo.dueDate }}</span>
+            Due Date:
+            <span class="date">{{ dateTime(selectedTodo.dueDate) }}</span>
           </div>
           <div class="priority d-flex" style="margin-bottom: 8px">
             <span>Priority:</span>
@@ -44,8 +46,13 @@
                 v-for="(subTask, index) in selectedTodo.subTasks"
                 :key="index"
               >
-                <span style="max-width: 280px">{{ subTask }}</span>
-                <div>
+                <span
+                  :id="index"
+                  :class="{ taskDone: selectedTodo.subTaskDoneStatus }"
+                  style="max-width: 280px"
+                  >{{ subTask }}</span
+                >
+                <div class="d-flex align-items-center">
                   <i
                     class="bi bi-clipboard2-check"
                     style="font-size: 20px; cursor: pointer"
@@ -53,6 +60,14 @@
                     data-bs-placement="right"
                     title="Done"
                     @click="subTaskDone(index)"
+                  ></i>
+                  <i
+                    class="bi bi-arrow-return-left"
+                    style="font-size: 20px; cursor: pointer; margin-left: 16px"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="Remove Done"
+                    @click="removeDoneStatus(index)"
                   ></i>
                 </div>
               </div>
@@ -80,7 +95,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <i class="bi bi-pencil-square"></i>
+          <i
+            class="bi bi-trash delete-task"
+            style="color: red; cursor: pointer; font-size: 22px"
+            data-bs-dismiss="modal"
+            @click="deleteTask(selectedTodo.subId)"
+          ></i>
         </div>
       </div>
     </div>
@@ -119,10 +139,9 @@
               <p style="color: #363636">({{ item.subTasks.length }})</p>
             </div>
             <div
-              class="assignedTo d-flex justify-content-between"
-              style="margin-top: 4px"
+              class="assignedTo d-flex justify-content-between align-items-center"
             >
-              <div class="d-flex">
+              <div class="avatar-container d-flex">
                 <div
                   v-for="user in item.assignedTo"
                   :key="user"
@@ -133,12 +152,39 @@
                 </div>
               </div>
 
+              <div
+                class="task-priorrity d-flex align-items-center"
+                v-if="item.priority == 'High'"
+              >
+                <i
+                  class="bi bi-chevron-double-up"
+                  style="color: #f70000; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Medium'"
+              >
+                <i
+                  class="bi bi-chevron-bar-contract"
+                  style="color: #fb6b00; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Low'"
+              >
+                <i
+                  class="bi bi-chevron-double-down"
+                  style="color: #00c209; font-size: 22px"
+                ></i>
+              </div>
               <i
-                class="bi bi-three-dots-vertical"
-                style="cursor: pointer"
+                class="bi bi-arrows-angle-expand"
+                @click="getTask(item.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#boardModal"
-                @click="getTask(item.id)"
+                style="cursor: pointer"
               ></i>
             </div>
           </div>
@@ -175,8 +221,10 @@
               <p style="color: #363636; margin-right: 4px">Subtasks</p>
               <p style="color: #363636">({{ item.subTasks.length }})</p>
             </div>
-            <div class="assignedTo d-flex justify-content-between">
-              <div class="d-flex">
+            <div
+              class="assignedTo d-flex justify-content-between align-items-center"
+            >
+              <div class="avatar-container d-flex">
                 <div
                   v-for="user in item.assignedTo"
                   :key="user"
@@ -187,12 +235,39 @@
                 </div>
               </div>
 
+              <div
+                class="task-priorrity d-flex align-items-center"
+                v-if="item.priority == 'High'"
+              >
+                <i
+                  class="bi bi-chevron-double-up"
+                  style="color: #f70000; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Medium'"
+              >
+                <i
+                  class="bi bi-chevron-bar-contract"
+                  style="color: #fb6b00; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Low'"
+              >
+                <i
+                  class="bi bi-chevron-double-down"
+                  style="color: #00c209; font-size: 22px"
+                ></i>
+              </div>
               <i
-                class="bi bi-three-dots-vertical"
-                style="cursor: pointer"
+                class="bi bi-arrows-angle-expand"
+                @click="getTask(item.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#boardModal"
-                @click="getTask(item.id)"
+                style="cursor: pointer"
               ></i>
             </div>
           </div>
@@ -229,8 +304,10 @@
               <p style="color: #363636; margin-right: 4px">Subtasks</p>
               <p style="color: #363636">({{ item.subTasks.length }})</p>
             </div>
-            <div class="assignedTo d-flex justify-content-between">
-              <div class="d-flex">
+            <div
+              class="assignedTo d-flex justify-content-between align-items-center"
+            >
+              <div class="avatar-container d-flex">
                 <div
                   v-for="user in item.assignedTo"
                   :key="user"
@@ -241,12 +318,39 @@
                 </div>
               </div>
 
+              <div
+                class="task-priorrity d-flex align-items-center"
+                v-if="item.priority == 'High'"
+              >
+                <i
+                  class="bi bi-chevron-double-up"
+                  style="color: #f70000; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Medium'"
+              >
+                <i
+                  class="bi bi-chevron-bar-contract"
+                  style="color: #fb6b00; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Low'"
+              >
+                <i
+                  class="bi bi-chevron-double-down"
+                  style="color: #00c209; font-size: 22px"
+                ></i>
+              </div>
               <i
-                class="bi bi-three-dots-vertical"
-                style="cursor: pointer"
+                class="bi bi-arrows-angle-expand"
+                @click="getTask(item.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#boardModal"
-                @click="getTask(item.id)"
+                style="cursor: pointer"
               ></i>
             </div>
           </div>
@@ -284,8 +388,10 @@
               <p style="color: #363636; margin-right: 4px">Subtasks</p>
               <p style="color: #363636">({{ item.subTasks.length }})</p>
             </div>
-            <div class="assignedTo d-flex justify-content-between">
-              <div class="d-flex">
+            <div
+              class="assignedTo d-flex justify-content-between align-items-center"
+            >
+              <div class="avatar-container d-flex">
                 <div
                   v-for="user in item.assignedTo"
                   :key="user"
@@ -295,13 +401,39 @@
                   <span>{{ getInitials(user) }}</span>
                 </div>
               </div>
-
+              <div
+                class="task-priorrity d-flex align-items-center"
+                v-if="item.priority == 'High'"
+              >
+                <i
+                  class="bi bi-chevron-double-up"
+                  style="color: #f70000; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Medium'"
+              >
+                <i
+                  class="bi bi-chevron-bar-contract"
+                  style="color: #fb6b00; font-size: 22px"
+                ></i>
+              </div>
+              <div
+                class="task-priorrity d-flex align-center"
+                v-if="item.priority == 'Low'"
+              >
+                <i
+                  class="bi bi-chevron-double-down"
+                  style="color: #00c209; font-size: 22px"
+                ></i>
+              </div>
               <i
-                class="bi bi-three-dots-vertical"
-                style="cursor: pointer"
+                class="bi bi-arrows-angle-expand"
+                @click="getTask(item.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#boardModal"
-                @click="getTask(item.id)"
+                style="cursor: pointer"
               ></i>
             </div>
           </div>
@@ -323,8 +455,9 @@ import {
   collection,
   onSnapshot,
   getDoc,
-  arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
+import moment from "moment";
 
 export default {
   name: "Groups",
@@ -354,6 +487,7 @@ export default {
       ],
       selectedTodo: {},
       tasks: [],
+      subTaskDoneStatus: false,
     };
   },
 
@@ -381,15 +515,34 @@ export default {
   },
 
   methods: {
+    async deleteTask(selectedTodId) {
+      await deleteDoc(doc(db, "tasks", `${selectedTodId}`));
+      this.$router.go();
+    },
+
+    dateTime(value) {
+      return moment(value).format("DD.MM.YY");
+    },
+
     async subTaskDone(index) {
-      console.log(index);
-      console.log(this.selectedTodo.subTasks);
-      console.log(this.selectedTodo.subTasks[index]);
+      // console.log(index);
+      // console.log(this.selectedTodo.subTasks);
+      // console.log(this.selectedTodo.subTasks[index]);
+      // await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
+      //   subTasks: arrayRemove(this.selectedTodo.subTasks[index]),
+      // });
+      // this.selectedTodo.subTasks.splice(index, 1);
       await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
-        subTasks: arrayRemove(this.selectedTodo.subTasks[index]),
+        subTaskDoneStatus: true,
       });
-      this.selectedTodo.subTasks.splice(index, 1);
-      this.getTasks();
+      document.getElementById(`${index}`).classList.add("taskDone");
+    },
+
+    async removeDoneStatus(index) {
+      await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
+        subTaskDoneStatus: false,
+      });
+      document.getElementById(`${index}`).classList.remove("taskDone");
     },
 
     async getTasks() {
@@ -465,7 +618,6 @@ export default {
       } else {
         alert("No such document");
       }
-      console.log(this.selectedTodo);
     },
 
     //drag and drop functions
@@ -599,7 +751,6 @@ export default {
 .sub-tasks {
   display: flex;
   align-items: center;
-  margin-bottom: 4px;
   span {
     font-weight: 500;
   }
@@ -641,10 +792,19 @@ export default {
   }
 }
 
+.avatar-container {
+  min-width: 85px;
+  max-width: 85px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
 .avatar-icon {
   color: #ffffff;
   border-radius: 50%;
   margin-right: 4px;
+  margin-bottom: 4px;
   font-size: 12px;
   display: flex;
   justify-content: center;
@@ -769,14 +929,6 @@ export default {
   }
 }
 
-.modal-footer {
-  padding: 0 10px 0 0;
-  font-size: 26px;
-  i {
-    cursor: pointer;
-  }
-}
-
 .no-todos {
   display: flex;
   justify-content: center;
@@ -802,5 +954,19 @@ export default {
   font-size: 14px;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  &:hover {
+    background-color: #dfdfdf;
+  }
+}
+
+.delete-task {
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.taskDone {
+  text-decoration: line-through;
 }
 </style>

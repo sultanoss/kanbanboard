@@ -94,20 +94,31 @@
             <label for="subtasks" class="form-label">Subtasks</label>
             <div class="input-group mb-3">
               <div class="search">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Add new subtask"
-                  v-model="subTask"
-                />
-                <i class="bi bi-plus" @click="addSubTask"></i>
+                <form @submit.prevent="addSubTask">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Add new subtask"
+                    v-model="subTask"
+                  />
+                  <i class="bi bi-plus" @click="addSubTask"></i>
+                </form>
               </div>
             </div>
+            <span v-if="alert" style="color: red">Please fill the subtasks fields.</span>
           </div>
           <div class="sub-tasks">
-            <div class="subTask" v-for="subtask in subTasks" :key="subtask">
+            <div
+              class="subTask"
+              v-for="(subtask, index) in subTasks"
+              :key="subtask"
+            >
               {{ subtask }}
-              <i class="bi bi-x" style="font-size: 24px"></i>
+              <i
+                class="bi bi-x"
+                style="font-size: 24px; cursor: pointer"
+                @click="deleteSubtask(index)"
+              ></i>
             </div>
           </div>
         </div>
@@ -117,6 +128,7 @@
           type="button"
           class="guest btn btn-sm btn-outline-dark m-1"
           style="width: 130px"
+          @click="clearAddTask"
         >
           Clear
         </button>
@@ -154,6 +166,7 @@ export default {
       subTasks: [],
       users: [],
       tasks: [],
+      alert: false,
     };
   },
 
@@ -170,7 +183,18 @@ export default {
         subTasks: this.subTasks,
         collection: "todos",
       });
+      this.clearAddTask();
       this.$router.push("/main/board");
+    },
+
+    clearAddTask() {
+      this.title = "";
+      this.description = "";
+      this.category = "";
+      this.assignedTo = [];
+      this.dueDate = "";
+      this.priority = "";
+      this.subTasks = [];
     },
 
     async getUsers() {
@@ -193,9 +217,17 @@ export default {
       });
     },
     addSubTask() {
-      this.subTasks.push(this.subTask);
-      this.subTask = "";
-      console.log(this.subTasks);
+      if (this.subTask.length == 0) {
+        this.alert = true;
+      } else {
+        this.subTasks.push({text : this.subTask, isDone: false});
+        this.subTask = "";
+        this.alert = false;
+      }
+    },
+
+    deleteSubtask(index) {
+      this.subTasks.splice(index, 1);
     },
   },
 };
