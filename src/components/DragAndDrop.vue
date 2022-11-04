@@ -48,9 +48,9 @@
               >
                 <span
                   :id="index"
-                  :class="{ taskDone: selectedTodo.subTaskDoneStatus }"
+                  :class="{ taskDone: selectedTodo.subTasks[index].isDone }"
                   style="max-width: 280px"
-                  >{{ subTask }}</span
+                  >{{ subTask.text }}</span
                 >
                 <div class="d-flex align-items-center">
                   <i
@@ -525,24 +525,17 @@ export default {
     },
 
     async subTaskDone(index) {
-      // console.log(index);
-      // console.log(this.selectedTodo.subTasks);
-      // console.log(this.selectedTodo.subTasks[index]);
-      // await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
-      //   subTasks: arrayRemove(this.selectedTodo.subTasks[index]),
-      // });
-      // this.selectedTodo.subTasks.splice(index, 1);
+      this.selectedTodo.subTasks[index].isDone = true;
       await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
-        subTaskDoneStatus: true,
+        subTasks: this.selectedTodo.subTasks,
       });
-      document.getElementById(`${index}`).classList.add("taskDone");
     },
 
     async removeDoneStatus(index) {
+      this.selectedTodo.subTasks[index].isDone = false;
       await updateDoc(doc(db, "tasks", `${this.selectedTodo.subId}`), {
-        subTaskDoneStatus: false,
+        subTasks: this.selectedTodo.subTasks,
       });
-      document.getElementById(`${index}`).classList.remove("taskDone");
     },
 
     async getTasks() {

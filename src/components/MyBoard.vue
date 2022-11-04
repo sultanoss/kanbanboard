@@ -129,7 +129,7 @@
                     v-for="(subtask, index) in subTasks"
                     :key="subtask"
                   >
-                    {{ subtask }}
+                    {{ subtask.text }}
                     <i
                       class="bi bi-x"
                       style="font-size: 24px; cursor: pointer"
@@ -225,6 +225,7 @@ export default {
       this.assignedTo = [];
       this.dueDate = "";
       this.priority = "";
+      this.subTask = "";
       this.subTasks = [];
     },
 
@@ -256,7 +257,7 @@ export default {
       if (this.subTask.length == 0) {
         this.alert = true;
       } else {
-        this.subTasks.push(this.subTask);
+        this.subTasks.push({ text: this.subTask, isDone: false });
         this.subTask = "";
         this.alert = false;
       }

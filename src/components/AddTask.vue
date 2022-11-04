@@ -105,7 +105,9 @@
                 </form>
               </div>
             </div>
-            <span v-if="alert" style="color: red">Please fill the subtasks fields.</span>
+            <span v-if="alert" style="color: red"
+              >Please fill the subtasks fields.</span
+            >
           </div>
           <div class="sub-tasks">
             <div
@@ -113,7 +115,7 @@
               v-for="(subtask, index) in subTasks"
               :key="subtask"
             >
-              {{ subtask }}
+              {{ subtask.text }}
               <i
                 class="bi bi-x"
                 style="font-size: 24px; cursor: pointer"
@@ -194,6 +196,7 @@ export default {
       this.assignedTo = [];
       this.dueDate = "";
       this.priority = "";
+      this.subTask = "";
       this.subTasks = [];
     },
 
@@ -220,7 +223,7 @@ export default {
       if (this.subTask.length == 0) {
         this.alert = true;
       } else {
-        this.subTasks.push({text : this.subTask, isDone: false});
+        this.subTasks.push({ text: this.subTask, isDone: false });
         this.subTask = "";
         this.alert = false;
       }
