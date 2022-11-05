@@ -1,4 +1,13 @@
 <template>
+  <button
+    type="button"
+    class="addtask-mobile btn btn-dark btn-sm m-1"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+    style="width: 130px; align-self: end"
+  >
+    New contact
+  </button>
   <div class="contacts-container d-flex">
     <div class="contacts">
       <div
@@ -86,7 +95,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- new contact Modal -->
   <div
     class="modal fade"
     id="exampleModal"
@@ -188,6 +197,7 @@
       </div>
     </div>
   </div>
+  <!-- end new contact Modal -->
 </template>
 
 <script>
@@ -304,6 +314,9 @@ export default {
 .contacts-container {
   height: calc(100vh - 50px);
   background-color: rgb(247, 247, 247);
+  @media (max-width: 576px) {
+    height: calc(100vh - 100px);
+  }
 }
 
 .contacts {
@@ -313,12 +326,23 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-top: 34px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    padding-top: 50px;
+    height: calc(100vh - 50px);
+    overflow: auto;
+  }
+  @media (max-width: 576px) {
+    height: calc(100vh - 50px);
+    overflow: auto;
+  }
 }
 
 .users {
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 95%;
   margin-top: 16px;
   padding: 10px;
   border-radius: 8px;
@@ -338,6 +362,9 @@ export default {
   span:first-letter {
     text-transform: capitalize;
   }
+  @media (max-width: 767px) {
+    width: 150px;
+  }
 }
 
 .contacts-content {
@@ -346,6 +373,27 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   padding: 50px;
+  @media (max-width: 1024px) {
+    padding-left: 0px;
+    padding-right: 0px;
+
+    button {
+      margin-right: 20px !important;
+    }
+
+    .summary-header {
+      h2 {
+        padding-right: 16px !important;
+      }
+      span {
+        padding-left: 16px !important;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 .avatar-icon {
   color: #ffffff;
@@ -371,6 +419,9 @@ export default {
     margin-bottom: 16px;
     cursor: unset;
     width: 341px;
+    @media (max-width: 1024px) {
+      width: 260px;
+    }
   }
   .avatar-icon {
     height: 40px;
@@ -408,5 +459,17 @@ export default {
 input:focus {
   box-shadow: none;
   outline: 1px solid #29abe2;
+}
+
+.addtask-mobile {
+  display: none;
+  @media (max-width: 767px) {
+    display: block;
+    width: 100px !important;
+    align-self: end;
+    position: absolute;
+    right: 16px;
+    top: 64px;
+  }
 }
 </style>

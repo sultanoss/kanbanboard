@@ -143,6 +143,16 @@ export default {
   padding-right: 24px;
 }
 
+.logo{
+  @media(max-width:767px){
+    margin-top: 27px !important;
+    margin-bottom: 27px !important;
+    img{
+      height: 56px !important;
+    }
+  }
+}
+
 ul {
   align-self: center;
 }
@@ -156,9 +166,6 @@ ul {
 .nav-link:focus,
 .nav-link:hover {
   color: #29abe2;
-}
-.router-content {
-  // min-height: calc(100vh - 50px);
 }
 
 @media (max-width: 768px) {
@@ -213,9 +220,9 @@ ul {
     min-height: unset !important;
   }
 
-  .summary-container {
-    height: calc(100vh - 100px) !important;
-  }
+  // .summary-container {
+  //   height: calc(100vh - 100px) !important;
+  // }
 }
 
 .logout {

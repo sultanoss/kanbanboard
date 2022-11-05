@@ -269,6 +269,16 @@ export default {
     height: calc(100vh - 50px);
     justify-content: center;
   }
+  @media (max-width: 767px) {
+    height: calc(100vh - 100px) !important;
+  }
+
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: calc(100vh - 61px) !important;
+    justify-content: unset;
+    overflow: auto;
+    padding-top: 16px;
+  }
 }
 .summary-header {
   margin-top: 50px;
@@ -285,15 +295,15 @@ export default {
   @media (max-width: 1200px) {
     margin: unset;
   }
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     flex-direction: column;
-    h2{
+    h2 {
       border-right: unset !important;
       padding-right: unset !important;
       margin-bottom: 8px !important;
       font-size: 20px;
     }
-    span{
+    span {
       margin-bottom: 16px;
       padding-left: unset !important;
       font-size: 14px !important;
@@ -303,7 +313,7 @@ export default {
 
 .summary-items {
   width: 400px;
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     width: 320px;
   }
 }
@@ -317,7 +327,7 @@ export default {
       font-size: 32px !important;
     }
   }
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     display: none !important;
   }
 }
@@ -334,7 +344,7 @@ export default {
   padding: 16px;
   text-align: center;
 
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     height: 90px;
     width: 90px;
     padding: 8px;
@@ -348,7 +358,7 @@ export default {
   span {
     font-weight: 600;
     font-size: 32px;
-    @media(max-width:576px){
+    @media (max-width: 576px) {
       font-size: 24px;
     }
   }
@@ -357,7 +367,7 @@ export default {
 .row1 {
   justify-content: space-between;
   width: 100%;
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     width: 90%;
   }
 }
@@ -367,10 +377,10 @@ export default {
   border-radius: 16px;
   margin-top: 16px;
   width: 100%;
- @media(max-width:576px){
-  padding: 8px;
-  width: 90%;
- }
+  @media (max-width: 576px) {
+    padding: 8px;
+    width: 90%;
+  }
 }
 
 .status {
@@ -384,7 +394,7 @@ export default {
   p {
     font-size: 12px;
     font-weight: 500;
-    @media(max-width:576px){
+    @media (max-width: 576px) {
       margin-bottom: 0;
     }
   }
@@ -412,7 +422,7 @@ export default {
 .row3 {
   width: 100%;
   margin-top: 16px;
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     width: 90%;
   }
 }
@@ -428,7 +438,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 16px;
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     padding: 8px;
   }
   span {
@@ -441,5 +451,4 @@ export default {
     margin-bottom: 0;
   }
 }
-
 </style>

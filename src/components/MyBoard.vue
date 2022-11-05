@@ -285,6 +285,12 @@ export default {
   align-items: center;
   height: calc(100vh - 50px);
   overflow: auto;
+  @media (max-width: 767px) {
+    height: calc(100vh - 100px);
+  }
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: calc(100vh - 100px) !important;
+  }
 }
 .board-header {
   display: flex;
@@ -292,6 +298,12 @@ export default {
   align-items: center;
   padding: 50px;
   width: 100%;
+  @media (max-width: 1024px) {
+    padding-top: 12px;
+    padding-bottom: 0px;
+    padding-left: 24px;
+    padding-right: 6px;
+  }
 }
 
 .board-headr-search {

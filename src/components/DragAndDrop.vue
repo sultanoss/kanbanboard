@@ -715,11 +715,17 @@ export default {
   width: 100%;
   padding-left: 50px;
   padding-right: 50px;
+  @media(max-width:320px){
+    padding: 0;
+  }
 }
 
 .group {
   flex: 1;
   margin: 10px;
+  @media(max-width:767px){
+   margin: 0;
+  }
 }
 
 .draggable-item {
@@ -961,5 +967,9 @@ export default {
 
 .taskDone {
   text-decoration: line-through;
+}
+
+.groups {
+  flex-wrap: wrap;
 }
 </style>
