@@ -40,18 +40,17 @@
               <option value="products">Products</option>
             </select>
           </div>
+          <label for="select" class="form-label">Assigned to</label>
           <div class="mb-3">
-            <label for="select" class="form-label">Assigned to</label>
             <select
               class="form-select form-select-sm"
-              aria-label=".form-select-sm example"
               required
               multiple
               v-model="assignedTo"
             >
-              <option selected style="font-weight: 500">
-                Select contacts to assign
-              </option>
+              <!-- <option selected style="font-weight: 500">
+                Please hold Ctrl for multi select.
+              </option> -->
               <option
                 v-for="user in users"
                 :data-value="{
@@ -169,6 +168,7 @@ export default {
       users: [],
       tasks: [],
       alert: false,
+      show: false,
     };
   },
 
@@ -232,6 +232,10 @@ export default {
     deleteSubtask(index) {
       this.subTasks.splice(index, 1);
     },
+
+    showUsers() {
+      this.show = !this.show;
+    },
   },
 };
 </script>
@@ -241,13 +245,23 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
+  @media (max-width: 767px) {
+    height: calc(100vh - 100px);
+  }
 }
 .add-task-header {
   padding: 50px;
   width: 90%;
+  @media (max-width: 767px) {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+    padding-right: 6px;
+    width: 100%;
+  }
 }
 .add-task-form {
   display: flex;
@@ -259,22 +273,58 @@ export default {
   justify-content: space-between;
   padding-bottom: 50px;
   font-weight: 500;
+  @media (max-width: 767px) {
+    height: calc(100vh - 100px);
+    overflow: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.form {
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 }
 
 .form-left {
   width: 50%;
   padding-right: 50px;
   border-right: 1px solid lightgrey;
+  @media (max-width: 767px) {
+    border: unset;
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+.select-user {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  label {
+    margin: 0;
+  }
 }
 
 .form-right {
   width: 50%;
   padding-left: 50px;
+  @media (max-width: 767px) {
+    width: 100%;
+    padding-left: 0;
+  }
 }
 
 .form-btn {
   display: flex;
   justify-content: flex-end;
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
 }
 
 .search {
@@ -332,5 +382,12 @@ select:focus {
     background: #212529;
     color: white;
   }
+}
+
+.hide {
+  display: none;
+}
+.visible {
+  display: flex;
 }
 </style>

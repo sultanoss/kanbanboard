@@ -345,15 +345,32 @@ export default {
   font-weight: 500;
 }
 
+.form {
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
 .form-left {
   width: 50%;
   padding-right: 50px;
   border-right: 1px solid lightgrey;
+  @media (max-width: 767px) {
+    border: unset;
+    width: 100%;
+    padding-right: 0;
+  }
 }
 
 .form-right {
   width: 50%;
   padding-left: 50px;
+  @media (max-width: 767px) {
+    width: 100%;
+    padding-left: 0;
+  }
 }
 
 .form-btn {

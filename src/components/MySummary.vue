@@ -274,7 +274,7 @@ export default {
   }
 
   @media (max-width: 767px) and (orientation: landscape) {
-    height: calc(100vh - 61px) !important;
+    height: calc(100vh - 100px) !important;
     justify-content: unset;
     overflow: auto;
     padding-top: 16px;
