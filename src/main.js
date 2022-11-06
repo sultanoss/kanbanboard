@@ -4,10 +4,10 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { createRouter, createWebHistory } from "vue-router";
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
 import "bootstrap/dist/js/bootstrap.js";
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import MyLogin from "./components/MyLogin.vue"
 import MainPage from "./components/MainPage.vue";
@@ -52,6 +52,8 @@ const router = createRouter({
     ],
     linkActiveClass: 'active' //change the default class name from router-link-active to active
 });
+
+
 
 const app = createApp(App);
 app.use(router);

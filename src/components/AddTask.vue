@@ -67,12 +67,7 @@
         <div class="form-right">
           <div class="mb-3">
             <label for="date" class="form-label">Due date</label>
-            <input
-              type="date"
-              class="form-control"
-              required
-              v-model="dueDate"
-            />
+            <input type="date" class="form-control" required v-model="dueDate" />
           </div>
           <div class="mb-3">
             <label for="select" class="form-label">Priority</label>
@@ -104,16 +99,10 @@
                 </form>
               </div>
             </div>
-            <span v-if="alert" style="color: red"
-              >Please fill the subtasks fields.</span
-            >
+            <span v-if="alert" style="color: red">Please fill the subtasks fields.</span>
           </div>
           <div class="sub-tasks">
-            <div
-              class="subTask"
-              v-for="(subtask, index) in subTasks"
-              :key="subtask"
-            >
+            <div class="subTask" v-for="(subtask, index) in subTasks" :key="subtask">
               {{ subtask.text }}
               <i
                 class="bi bi-x"
@@ -133,11 +122,7 @@
         >
           Clear
         </button>
-        <button
-          class="btn btn-dark btn-sm m-1"
-          type="submit"
-          style="width: 130px"
-        >
+        <button class="btn btn-dark btn-sm m-1" type="submit" style="width: 130px">
           Create Task
         </button>
       </div>

@@ -1,0 +1,44 @@
+[debug] [2022-11-06T01:23:13.311Z] ----------------------------------------------------------------------
+[debug] [2022-11-06T01:23:13.312Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\radwa\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2022-11-06T01:23:13.313Z] CLI Version:   11.16.0
+[debug] [2022-11-06T01:23:13.313Z] Platform:      win32
+[debug] [2022-11-06T01:23:13.313Z] Node Version:  v18.12.1
+[debug] [2022-11-06T01:23:13.313Z] Time:          Sun Nov 06 2022 02:23:13 GMT+0100 (Mitteleuropäische Normalzeit)
+[debug] [2022-11-06T01:23:13.314Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-06T01:23:13.360Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-06T01:23:13.360Z] > authorizing via signed-in user (radwansultan@hotmail.de)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\radwa\kanbanboard
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-11-06T01:23:27.253Z] Using project from CLI flag: kanban-board-de372
+[debug] [2022-11-06T01:23:27.255Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/kanban-board-de372 [none]
+[debug] [2022-11-06T01:23:27.516Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/kanban-board-de372 200
+[debug] [2022-11-06T01:23:27.516Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/kanban-board-de372 {"projectId":"kanban-board-de372","projectNumber":"421175975051","displayName":"Kanban Board","name":"projects/kanban-board-de372","resources":{"hostingSite":"kanban-board-de372","realtimeDatabaseInstance":"kanban-board-de372-default-rtdb","storageBucket":"kanban-board-de372.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_74773259-47d2-462c-93df-0b46549c3850"}
+[info] i  Using project kanban-board-de372 (Kanban Board) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 

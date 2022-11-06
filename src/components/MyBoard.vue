@@ -84,12 +84,7 @@
               <div class="form-right">
                 <div class="mb-3">
                   <label for="date" class="form-label">Due date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    required
-                    v-model="dueDate"
-                  />
+                  <input type="date" class="form-control" required v-model="dueDate" />
                 </div>
                 <div class="mb-3">
                   <label for="select" class="form-label">Priority</label>

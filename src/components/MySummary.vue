@@ -1,9 +1,7 @@
 <!-- eslint-disable vue/no-deprecated-filter -->
 <template>
   <div class="summary-container">
-    <div
-      class="summary-header d-flex justify-content-center align-items-center"
-    >
+    <div class="summary-header d-flex justify-content-center align-items-center">
       <h2
         style="
           margin: 0px;
@@ -15,13 +13,7 @@
       >
         Summary
       </h2>
-      <span
-        style="
-          font-weight: 500;
-          font-size: 18px;
-          padding-left: 32px;
-          color: #433b3b;
-        "
+      <span style="font-weight: 500; font-size: 18px; padding-left: 32px; color: #433b3b"
         >Everything in a nutshell!</span
       >
     </div>
@@ -42,9 +34,7 @@
           </div>
         </div>
         <div class="row2 d-flex justify-content-center align-items-center">
-          <div
-            class="status-details d-flex justify-content-center align-items-center"
-          >
+          <div class="status-details d-flex justify-content-center align-items-center">
             <div
               class="urgent-icon d-flex justify-content-center align-items-center"
               style="
@@ -105,10 +95,7 @@
                 background-color: #2a3647;
               "
             >
-              <i
-                class="bi bi-check-lg"
-                style="color: white; font-size: 22px"
-              ></i>
+              <i class="bi bi-check-lg" style="color: white; font-size: 22px"></i>
             </div>
             <div class="todo-details">
               <span>{{ this.done.length }}</span>
@@ -119,11 +106,9 @@
       </div>
       <div class="summary-welcom d-flex flex-column align-items-center">
         <span style="font-weight: 500; font-size: 62px">Hello,</span>
-        <span
-          style="font-weight: 500; font-size: 48px; color: #29abe2"
-          v-if="user"
-          >{{ user.displayName }}</span
-        >
+        <span style="font-weight: 500; font-size: 48px; color: #29abe2" v-if="user">{{
+          user.displayName
+        }}</span>
       </div>
     </div>
   </div>

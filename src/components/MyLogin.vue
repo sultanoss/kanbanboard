@@ -36,7 +36,7 @@
                 </div>
 
                 <!-- Checkbox -->
-                <div
+                <!-- <div
                   class="form-check d-flex justify-content-evenly mb-3 p-0"
                   style="font-size: 14px"
                 >
@@ -54,7 +54,7 @@
                   <a href="" class="text-decoration-none" style="color: #29abe2"
                     >Forgot my password</a
                   >
-                </div>
+                </div> -->
                 <div class="login-btn d-flex justify-content-center mb-3">
                   <button
                     class="btn btn-dark btn-sm m-1"

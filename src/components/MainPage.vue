@@ -3,7 +3,7 @@
     <div class="content-container row flex-nowrap">
       <div
         class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
-        style="background-color: #2a3647; max-width: 200px"
+        style="background-color: #2a3647; max-width: 200px; position: relative"
       >
         <div
           class="sidebar d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100"
@@ -19,33 +19,25 @@
             class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
             id="menu"
           >
-            <li
-              class="nav-item d-flex justify-content-center align-items-center"
-            >
+            <li class="nav-item d-flex justify-content-center align-items-center">
               <RouterLink to="/main/summary" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-card-list"></i
               ></RouterLink>
               <span class="ms-3 d-none d-sm-inline">Summary</span>
             </li>
-            <li
-              class="nav-item d-flex justify-content-center align-items-center"
-            >
+            <li class="nav-item d-flex justify-content-center align-items-center">
               <RouterLink to="/main/board" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-kanban"></i
               ></RouterLink>
               <span class="ms-3 d-none d-sm-inline">Board</span>
             </li>
-            <li
-              class="nav-item d-flex justify-content-center align-items-center"
-            >
+            <li class="nav-item d-flex justify-content-center align-items-center">
               <RouterLink to="/main/addtask" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-pencil-square"></i
               ></RouterLink>
               <span class="ms-3 d-none d-sm-inline">Add Task</span>
             </li>
-            <li
-              class="nav-item d-flex justify-content-center align-items-center"
-            >
+            <li class="nav-item d-flex justify-content-center align-items-center">
               <RouterLink to="/main/contacts" class="nav-link align-middle px-0"
                 ><i class="fs-4 bi-person-rolodex"></i
               ></RouterLink>
@@ -53,6 +45,7 @@
             </li>
           </ul>
         </div>
+        <div class="imprint"><span>Imprint</span> <span>Legal notice</span></div>
       </div>
       <div class="col" style="background-color: #f7f7f7; padding: 0">
         <div class="header">
@@ -60,9 +53,7 @@
             >Kanban Project Management Tool</span
           >
           <img class="logo-img" src="../assets/capa.png" />
-          <div
-            class="user-help d-flex justify-content-center align-items-center"
-          >
+          <div class="user-help d-flex justify-content-center align-items-center">
             <RouterLink to="/main/help" class="nav-link align-middle px-0">
               <i
                 class="bi bi-question-circle"
@@ -143,11 +134,11 @@ export default {
   padding-right: 24px;
 }
 
-.logo{
-  @media(max-width:767px){
+.logo {
+  @media (max-width: 767px) {
     margin-top: 27px !important;
     margin-bottom: 27px !important;
-    img{
+    img {
       height: 56px !important;
     }
   }
@@ -258,6 +249,24 @@ ul {
 .bi-question-circle {
   @media (max-width: 576px) {
     font-size: 16px !important;
+  }
+}
+
+.imprint {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  justify-content: space-around;
+  color: #d8d8d8;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  span {
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    font-size: 14px;
   }
 }
 </style>
