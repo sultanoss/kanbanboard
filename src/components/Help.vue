@@ -12,41 +12,32 @@
       <h5>How to use it</h5>
       <ul>
         <li>
-          Add task bei using the <i class="fs-4 bi-pencil-square"></i> add-task
-          formula.
-        </li>
-        <li> <i class="bi bi-arrow-left-right"></i> Drag your task to the desired field.</li>
-        <li>
-          Click <i class="bi bi-arrows-angle-expand"></i> for task details.
+          Add task bei using the <i class="fs-4 bi-pencil-square"></i> add-task formula.
         </li>
         <li>
-          Click <i class="bi bi-clipboard2-check"></i> when a subtask is done.
+          <i class="bi bi-arrow-left-right"></i> Drag your task to the desired field.
         </li>
+        <li>Click <i class="bi bi-arrows-angle-expand"></i> for task details.</li>
+        <li>Click <i class="bi bi-clipboard2-check"></i> when a subtask is done.</li>
         <li>
-          Click <i class="bi bi-arrow-return-left"></i> if you want to remove
-          the done status of a subtask.
+          Click <i class="bi bi-arrow-return-left"></i> if you want to remove the done
+          status of a subtask.
         </li>
         <li>
           Click
-          <i
-            class="bi bi-trash delete-task"
-            style="color: red; cursor: pointer"
-          ></i>
+          <i class="bi bi-trash delete-task" style="color: red; cursor: pointer"></i>
           to delete a Task
         </li>
         <li>
-          Navigate to <i class="fs-4 bi-card-list"></i> Summary to see a summary
-          of all tasks
+          Navigate to <i class="fs-4 bi-card-list"></i> Summary to see a summary of all
+          tasks
         </li>
         <li>
-          Navigate to <i class="fs-4 bi-person-rolodex"> </i> Contacts to see
-          all contacts or create a new contact
+          Navigate to <i class="fs-4 bi-person-rolodex"> </i> Contacts to see all contacts
+          or create a new contact
         </li>
         <li>
-          <i
-            class="bi bi-chevron-double-up"
-            style="color: #f70000; font-size: 22px"
-          ></i>
+          <i class="bi bi-chevron-double-up" style="color: #f70000; font-size: 22px"></i>
           Priority High.
         </li>
         <li>
@@ -66,7 +57,6 @@
       </ul>
     </div>
   </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -77,7 +67,7 @@
   overflow: auto;
   padding: 50px;
   @media (max-width: 576px) {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 137px);
     padding: 24px;
     overflow: auto;
     h2 {

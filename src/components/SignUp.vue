@@ -1,7 +1,7 @@
 <template>
   <div
     class="login-container vh-100 d-flex flex-column"
-    style="background-color: #f7f7f7"
+    style="background-color: #f7f7f7; overflow: auto"
   >
     <section class="h-100">
       <div class="container h-100">

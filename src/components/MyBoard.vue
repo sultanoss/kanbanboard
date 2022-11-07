@@ -281,10 +281,10 @@ export default {
   height: calc(100vh - 50px);
   overflow: auto;
   @media (max-width: 767px) {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 137px);
   }
   @media (max-width: 767px) and (orientation: landscape) {
-    height: calc(100vh - 100px) !important;
+    height: calc(100vh - 137px) !important;
   }
 }
 .board-header {

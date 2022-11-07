@@ -255,11 +255,11 @@ export default {
     justify-content: center;
   }
   @media (max-width: 767px) {
-    height: calc(100vh - 100px) !important;
+    height: calc(100vh - 137px) !important;
   }
 
   @media (max-width: 767px) and (orientation: landscape) {
-    height: calc(100vh - 100px) !important;
+    height: calc(100vh - 137px) !important;
     justify-content: unset;
     overflow: auto;
     padding-top: 16px;

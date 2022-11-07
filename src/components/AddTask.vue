@@ -234,7 +234,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   @media (max-width: 767px) {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 137px);
   }
 }
 .add-task-header {

@@ -1,10 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="content-container row flex-nowrap">
-      <div
-        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
-        style="background-color: #2a3647; max-width: 200px; position: relative"
-      >
+      <div class="sidebar-container col-auto col-md-3 col-xl-2 px-sm-2 px-0">
         <div
           class="sidebar d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100"
         >
@@ -257,7 +254,7 @@ ul {
   align-items: center;
   margin-bottom: 16px;
   justify-content: space-around;
-  color: #d8d8d8;
+  color: #939393;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -267,6 +264,38 @@ ul {
   }
   @media (max-width: 768px) {
     font-size: 14px;
+  }
+  @media (max-width: 767px) {
+    position: unset;
+    justify-content: space-around;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 767px) and (orientation: landscape) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 16px;
+    flex-direction: column;
+    width: 100%;
+  }
+  @media (max-width: 480px) and (orientation: landscape) {
+    flex-direction: row;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.sidebar-container {
+  background-color: #2a3647;
+  max-width: 200px;
+  position: relative;
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: 100vh !important;
+    overflow: auto !important;
+  }
+  @media (max-width: 480px) and (orientation: landscape) {
+    height: unset !important;
   }
 }
 </style>

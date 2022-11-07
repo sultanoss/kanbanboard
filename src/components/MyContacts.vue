@@ -10,16 +10,8 @@
   </button>
   <div class="contacts-container d-flex">
     <div class="contacts">
-      <div
-        class="users"
-        v-for="user in users"
-        :key="user.id"
-        @click="getUser(user.id)"
-      >
-        <div
-          v-bind:style="{ backgroundColor: getRandomColor() }"
-          class="avatar-icon"
-        >
+      <div class="users" v-for="user in users" :key="user.id" @click="getUser(user.id)">
+        <div v-bind:style="{ backgroundColor: getRandomColor() }" class="avatar-icon">
           <span>{{ getInitials(user.firstName + user.lastName) }}</span>
         </div>
         <div class="user-infos">
@@ -31,9 +23,7 @@
       </div>
     </div>
     <div class="contacts-content">
-      <div
-        class="summary-header d-flex justify-content-center align-items-center"
-      >
+      <div class="summary-header d-flex justify-content-center align-items-center">
         <h2
           style="
             margin: 0px;
@@ -57,13 +47,8 @@
           <p>No selected Contact</p>
         </div>
         <div class="users" v-if="Object.keys(selectedUser).length > 0">
-          <div
-            v-bind:style="{ backgroundColor: getRandomColor() }"
-            class="avatar-icon"
-          >
-            <span>{{
-              getInitials(selectedUser.firstName + selectedUser.lastName)
-            }}</span>
+          <div v-bind:style="{ backgroundColor: getRandomColor() }" class="avatar-icon">
+            <span>{{ getInitials(selectedUser.firstName + selectedUser.lastName) }}</span>
           </div>
           <div class="user-infos">
             <span style="font-weight: 500; font-size: 24px">{{
@@ -71,10 +56,7 @@
             }}</span>
           </div>
         </div>
-        <div
-          class="contact-information"
-          v-if="Object.keys(selectedUser).length > 0"
-        >
+        <div class="contact-information" v-if="Object.keys(selectedUser).length > 0">
           <h5>Contact Information</h5>
           <h6>E-mail</h6>
           <a :href="`mailto:${selectedUser.email}`">{{ selectedUser.email }}</a>
@@ -315,7 +297,7 @@ export default {
   height: calc(100vh - 50px);
   background-color: rgb(247, 247, 247);
   @media (max-width: 576px) {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 137px);
   }
 }
 
@@ -330,13 +312,13 @@ export default {
   @media (max-width: 767px) {
     width: 100%;
     padding-top: 50px;
-    height: calc(100vh - 50px);
+    // height: calc(100vh - 50px);
     overflow: auto;
   }
-  @media (max-width: 576px) {
-    height: calc(100vh - 50px);
-    overflow: auto;
-  }
+  // @media (max-width: 576px) {
+  //   height: calc(100vh - 50px);
+  //   overflow: auto;
+  // }
 }
 
 .users {
