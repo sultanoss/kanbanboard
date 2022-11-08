@@ -50,7 +50,7 @@
                     required
                     v-model="category"
                   >
-                    <option selected>Select task category</option>
+                    <option selected disabled>Select task category</option>
                     <option value="sales">Sales</option>
                     <option value="backoffice">Backoffice</option>
                     <option value="products">Products</option>
@@ -65,8 +65,8 @@
                     multiple
                     v-model="assignedTo"
                   >
-                    <option selected style="font-weight: 500">
-                      Select contacts to assign
+                    <option selected disabled style="font-weight: 500">
+                      Please hold Ctrl for multi select.
                     </option>
                     <option
                       v-for="user in users"
@@ -94,7 +94,7 @@
                     required
                     v-model="priority"
                   >
-                    <option selected>Set Priority</option>
+                    <option selected disabled>Set Priority</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>

@@ -109,6 +109,9 @@
         <span style="font-weight: 500; font-size: 48px; color: #29abe2" v-if="user">{{
           user.displayName
         }}</span>
+        <span style="font-weight: 500; font-size: 48px; color: #29abe2" v-if="!user"
+          >Guest</span
+        >
       </div>
     </div>
   </div>

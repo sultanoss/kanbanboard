@@ -17,6 +17,8 @@ import AddTask from "./components/AddTask.vue"
 import MyContacts from "./components/MyContacts.vue"
 import SignUp from "./components/SignUp.vue";
 import Help from "./components/Help.vue"
+import MyImprint from "./components/MyImprint.vue"
+import MyLegalNotice from "./components/MyLegalNotice.vue";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWOZKferZ4TiSnQM-b3jvKBl-qTFm0o9w",
@@ -46,9 +48,12 @@ const router = createRouter({
                 { path: "addtask", component: AddTask },
                 { path: "contacts", component: MyContacts },
                 { path: "help", component: Help },
+                { path: "imprint", component: MyImprint },
+                { path: "legalnotice", component: MyLegalNotice },
             ]
         },
         { path: '/signup', component: SignUp },
+
     ],
     linkActiveClass: 'active' //change the default class name from router-link-active to active
 });

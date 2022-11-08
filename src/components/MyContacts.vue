@@ -163,14 +163,14 @@
                   style="width: 130px"
                   @click="clearInput"
                 >
-                  Cancel
+                  Clear
                 </button>
                 <button
                   type="submit"
                   class="btn btn-dark btn-sm m-1"
                   style="width: 130px"
                 >
-                  send
+                  Send
                 </button>
               </div>
             </form>

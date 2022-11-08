@@ -42,7 +42,10 @@
             </li>
           </ul>
         </div>
-        <div class="imprint"><span>Imprint</span> <span>Legal notice</span></div>
+        <div class="imprint">
+          <RouterLink to="/main/imprint">Imprint</RouterLink>
+          <RouterLink to="/main/legalnotice">Legal notice</RouterLink>
+        </div>
       </div>
       <div class="col" style="background-color: #f7f7f7; padding: 0">
         <div class="header">
@@ -259,8 +262,9 @@ ul {
   bottom: 0;
   left: 0;
   right: 0;
-  span {
-    cursor: pointer;
+  a {
+    text-decoration: none;
+    color: #999797;
   }
   @media (max-width: 768px) {
     font-size: 14px;
